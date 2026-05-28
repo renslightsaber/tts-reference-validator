@@ -1,0 +1,32 @@
+# tts_reference_validator.py 의존성
+# 설치:  pip install -r requirements.txt
+# (권장) conda env "flow" / Python 3.10+ / CUDA 12.x
+
+# --- 코어 (필수) ---
+numpy>=1.24
+scipy>=1.10
+pandas>=2.0
+soundfile>=0.12
+librosa>=0.10
+
+# --- F0 추출 ---
+torch>=2.0                 # A6000 + CUDA 12.x 환경에 맞는 빌드 사용
+torchaudio>=2.0
+torchcrepe>=0.0.23         # 1순위 F0 (confidence 제공)
+pyworld>=0.3               # F0 폴백 (harvest/stonemask)
+# RMVPE(노이즈 강건 대안)를 쓰려면 별도 설치:
+#   pip install rmvpe   (또는 공식 레포의 체크포인트 + 래퍼)
+
+# --- SECS (음색 유사도) ---
+speechbrain>=1.0           # ECAPA-TDNN (spkrec-ecapa-voxceleb)
+transformers>=4.40         # WavLM-SV (microsoft/wavlm-base-plus-sv)
+
+# --- 명료도(CER) + 국소 발화속도(단어 타임스탬프) ---
+faster-whisper>=1.0        # 한국어 ASR (large-v3), word_timestamps=True
+jiwer>=3.0                 # CER 계산
+jamo>=0.4                  # jamo-level CER (자모 분해)
+
+# --- 자연스러움(UTMOSv2) ---
+# PyPI 패키지명이 환경에 따라 다를 수 있어 git 설치를 권장:
+#   pip install git+https://github.com/sarulab-speech/UTMOSv2.git
+# (설치 후 `import utmosv2; utmosv2.create_model(pretrained=True)` 로 사용)
